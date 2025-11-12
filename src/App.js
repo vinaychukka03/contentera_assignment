@@ -5,25 +5,23 @@ import UserCard from './UserCard';
 function App() {
   const [data, setData] = useState([]);
   useEffect(() => {
-    const redditURL = "https://www.reddit.com/r/reactjs.json?raw_json=1";
+  const redditURL = "https://www.reddit.com/r/reactjs.json?raw_json=1";
 
-    // Always use proxy to avoid CORS
-    const isProduction = process.env.NODE_ENV === "production";
-    const corsProxy = "https://api.allorigins.win/get?url=";
+  // 💡 Use corsproxy.io (stable alternative to AllOrigins)
+  const finalURL = `https://corsproxy.io/?${encodeURIComponent(redditURL)}`;
 
-    const finalURL = `${corsProxy}${encodeURIComponent(redditURL)}`;
+  axios
+    .get(finalURL)
+    .then((res) => {
+      console.log("Fetched Data:", res.data);
+      setData(res.data.data.children);
+      console.log(data);
+    })
+    .catch((err) => {
+      console.error("Error fetching Reddit data:", err);
+    });
+}, []);
 
-    axios
-      .get(finalURL)
-      .then((res) => {
-        const jsonData = JSON.parse(res.data.contents);
-        setData(jsonData.data.children);
-        console.log("Fetched Data:", jsonData);
-      })
-      .catch((err) => {
-        console.error("Error fetching Reddit data:", err);
-      });
-  }, []);
 
 
   return (
