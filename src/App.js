@@ -7,7 +7,7 @@ function App() {
   useEffect(
     () => {
 
-      axios.get("/r/reactjs.json?raw_json=1").then(
+      axios.get("https://www.reddit.com/r/reactjs.json?raw_json=1").then(
         res => {
           setData(res.data.data.children);
         }
