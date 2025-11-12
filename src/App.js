@@ -1,24 +1,32 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
-
+import axios from 'axios';
+import UserCard from './UserCard';
 function App() {
+  const [data, setData] = useState([]);
+  useEffect(
+    () => {
+
+      axios.get("/r/reactjs.json?raw_json=1").then(
+        res => {
+          setData(res.data.data.children);
+        }
+      )
+    }, []
+  )
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div style={{backgroundColor:' black'}}>
+        <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'5rem'}}>
+          <h2>Contentera Assignment</h2>
+        </div>
+        <div style={{display:'flex',flexWrap:'wrap',width:'100%',flexDirection:'column',alignItems:'center'}}>
+        {data.map((card) => (
+          <UserCard key={card.data.title} card={card}/>
+        ))}
+        </div>
+      </div>
+    </>
   );
 }
 
