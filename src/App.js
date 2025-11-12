@@ -5,6 +5,8 @@ import UserCard from './UserCard';
 function App() {
   const [data, setData] = useState([]);
   useEffect(() => {
+    const isProduction = process.env.NODE_ENV === "production";
+
     const redditURL = "https://www.reddit.com/r/reactjs.json?raw_json=1";
 
     const finalURL = isProduction
@@ -28,7 +30,7 @@ function App() {
     <>
       <div style={{ backgroundColor: ' black' }}>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '5rem' }}>
-          <h2>Contentera Assignment</h2>
+          <h2>Contentera Assignment 1</h2>
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', width: '100%', flexDirection: 'column', alignItems: 'center' }}>
           {data.map((card) => (
