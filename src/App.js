@@ -5,17 +5,18 @@ import UserCard from './UserCard';
 
 function App() {
   const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const redditURL = "https://www.reddit.com/r/reactjs.json?raw_json=1";
-    const finalURL = `https://api.allorigins.win/get?url=${encodeURIComponent(redditURL)}`;
-
-    axios.get(finalURL)
+  
+  useEffect(() => {  
+    axios.get("https://www.reddit.com/r/reactjs.json?raw_json=1",{
+        headers: {
+          "Cache-Control": "no-cache",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        }
+      })
       .then((res) => {
-        // AllOrigins returns the actual data as a string inside "contents"
-        const redditData = JSON.parse(res.data.contents);
-        console.log("Fetched Data:", redditData);
-        setData(redditData.data.children);
+        console.log(res.data.data.children.data)
+        setData(res.data.data.children.data)
       })
       .catch((err) => {
         console.error("Error fetching Reddit data:", err);
